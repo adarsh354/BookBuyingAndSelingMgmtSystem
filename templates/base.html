@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<title>BookBuyerSellerManagementSystem</title>
+<meta charset="UTF-8">
+{% load static %}
+<link rel="stylesheet" href="{% static 'layout.css' %}" type="text/css">
+<!--[if lt IE 9]><script src="{% static 'html5shiv.js' %}"></script><![endif]-->
+</head>
+<body>
+<div class="wrapper row1">
+  <header id="header" class="clear">
+    <div id="hgroup">
+      <h1><a href="#">BookBazaar</a></h1>
+      <h2> __BookBuyerSellerManagementSystem</h2>
+    </div>
+    <nav>
+      <ul>
+        <li><a href="{% url 'home' %}">HOME</a></li>
+        <li><a href="{% url 'profile' %}">PROFILE</a></li>
+        <li>
+        {% if user == "NULL"%}
+          <a href="{% url 'login' %}">LOGIN</a>
+        {% elif user == "fail" %}
+          <a href="{% url 'login' %}">LOGIN</a>
+        {% else %}
+          LOGIN
+        {% endif %}
+        </li>
+        <li>
+        {% if user == "NULL"%}
+          <a href="{% url 'signup' %}">SignUp</a>
+        {% elif user == "fail"%}
+          <a href="{% url 'signup' %}">SignUp</a>
+        {% else %}
+          SignUp
+        {% endif %}
+        </a></li>
+        <li>
+        {% if user == "NULL"%}
+          REGISTER-BOOK
+        {% elif user == "fail"%}
+          REGISTER-BOOK
+        {% else %}
+          <a href="{% url 'register' %}">REGISTER-BOOK</a></li>
+        {% endif %}
+        <li class="last"><a href="{% url 'logout' %}">LOGOUT</a></li>
+      </ul>
+    </nav>
+  </header>
+</div>
+		{% block content %}
+			replace me
+		{% endblock %}
+<!-- footer -->
+<div class="wrapper row3">
+  <footer id="footer" class="clear">
+    <p class="fl_left">Copyright &copy; 2019 - All Rights Reserved - BookBazaar - By Adarsh S & Bharath Shreya M</p>
+    <p class="fl_right">Designed for <a target="_blank" href="https://www.os-templates.com/" title="Free Website Templates">__BookBuyerSellerManagementSystem</a></p>
+  </footer>
+</div>
+</body>
+</html>

@@ -1,0 +1,139 @@
+{% extends 'base.html' %}
+
+{% block content %}
+		{% load static %}
+		<link rel="stylesheet" href="{% static 'layout.css' %}" type="text/css">
+		<div class="wrapper row2">
+
+			<style>
+				.one_quarter, .two_quarter, .three_quarter, .four_quarter{display:block; float:left; margin:0 20px 0 0;}
+				.one_quarter{width:225px;}
+				.two_quarter{width:470px;}
+				.three_quarter{width:715px;}
+				.four_quarter{width:960px; float:none; margin-right:0; clear:both;}
+				.lastbox{margin-right:0;}
+			</style>
+
+  <div id="container" class="clear">
+
+    <div id="content">
+
+		<section id="latest" class="last">
+        <ul>
+          <li>
+            {% if user == "NULL" %}
+            <article class="clear">
+              <figure><img src="images/demo/180x150.gif" alt="">
+                <figcaption>
+                  <h2> PLEASE LOGIN/Signup BEFORE BUYING</h2>
+                  <p></p>
+                  <footer class="more">
+					        </footer>
+                </figcaption>
+              </figure>
+            </article>
+            {% elif user == "fail" %}
+            <article class="clear">
+              <figure><img src="images/demo/180x150.gif" alt="">
+                <figcaption>
+                  <h2> PLEASE LOGIN/Signup BEFORE BUYING</h2>
+                  <p></p>
+                  <footer class="more">
+                  </footer>
+                </figcaption>
+              </figure>
+            </article>
+            {% else %}
+            <article class="clear">
+              <h2><font color="#FF9900">{{book.book_name}}</font></h2>
+              <br>
+              <figure><img src="{{ book.image.url }}" alt="">
+                <figcaption>
+                  <br><br><br>
+                  <p><font color="#FF9900">BOOK_NAME: </font></p>
+                  <p>{{book.book_name}}</p>
+                  <p><font color="#FF9900">Author: </font></p>
+                  <p>{{book.author}}</p>
+                  <p><font color="#FF9900">Description: </font></p>
+                  <p>{{book.description}}</p>
+                  <p><font color="#FF9900">Subject: </font></p>
+                  <p>{{book.subject}}</p>
+                  <p><font color="#FF9900">Semester: </font></p>
+                  <p>{{book.semester}}</p>
+                  <p><font color="#FF9900">Seller_id: </font></p>
+                  <p>{{book.seller_id}}</p>
+                  <p><font color="#FF9900">price: </font></p>
+                  <p>{{book.price}}</p>
+                  <footer class="more">
+                  	<form method="POST">
+                  	{% csrf_token %}
+                  	<input id="user" type="text" name="bookid" class="input" value="{{book.book_id}}" readonly>
+                  	<div class="group">
+                    <input class="button" type='submit' value='BuyBook' formaction="{% url 'buying' book=book.book_id %}">
+                  	</div>
+                	</form>
+                			{% if status == "false" %}
+									<font color="red"></font>		
+							{% else  %}
+									<font color="red">Book is reserved for you.On complete payment administrator will look into delivery of the book</font>
+							{% endif%}
+                  </footer>
+                </figcaption>
+              </figure>
+            </article>
+            {% endif %}
+          </li>
+      	</ul>
+      </section>
+    </div>
+
+       
+    <!-- right column -->
+    <aside id="right_column">
+      <h2 class="title">Categories</h2>
+      <nav>
+        <ul>
+          <li>FIRST YEAR:</li>
+          <li><a href="{% url 'home1' sem=1 %}">1st SEM</a></li>
+          <li><a href="{% url 'home1' sem=2 %}">2nd SEM</a></li>
+          <br>
+          <li>SECOND YEAR:</li>
+          <li><a href="{% url 'home1' sem=3 %}">3rd SEM</a></li>
+          <li><a href="{% url 'home1' sem=4 %}">4th SEM</a></li>
+          <br>
+          <li>THIRD YEAR:</li>
+          <li><a href="{% url 'home1' sem=5 %}">5th SEM</a></li>
+          <li><a href="{% url 'home1' sem=6 %}">6th SEM</a></li>
+          <br>
+          <li>FOURTH YEAR:</li>
+          <li><a href="{% url 'home1' sem=7 %}">7th SEM</a></li>
+          <li><a href="{% url 'home1' sem=8 %}">8th SEM</a></li>
+          <br>
+        </ul>
+      </nav>
+      <!-- /nav -->
+      {% if user == "NULL" %}
+          <h2 class="title">Please LOGIN/SIGN_UP</h2>
+      {% elif user == "fail" %}
+          <h2 class="title">Please LOGIN/SIGN_UP</h2>
+      {% else %}
+          <h2 class="title">Logged in as:</h2>
+      {% endif %}   
+      <section class="last">
+        <address>
+        Full Name :{{obj.customer_name}}<br>
+        Email     :{{obj.email}}<br>
+        Address   :{{obj.address}}<br>
+        phno      :{{obj.phno}}<br>
+        userid    :{{obj.username}}<br>
+        <br>
+        </address>
+      </section>
+      <!-- /section -->
+    </aside>
+
+		</div>
+	</br>
+  </div>
+</div>
+{% endblock %}

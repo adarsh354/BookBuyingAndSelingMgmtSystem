@@ -1,0 +1,160 @@
+{% extends 'base.html' %}
+
+{% block content %}
+		{% load static %}
+		<link rel="stylesheet" href="{% static 'layout.css' %}" type="text/css">
+
+		<style>
+			.button {
+			  background-color: #4CAF50; /* Green */
+			  border: none;
+			  color: white;
+			  padding: 5px 32px;
+			  text-align: center;
+			  text-decoration: none;
+			  display: inline-block;
+			  font-size: 16px;
+			  margin: 4px 2px;
+			  -webkit-transition-duration: 0.4s; /* Safari */
+			  transition-duration: 0.4s;
+			  cursor: pointer;
+			}
+
+			.button1 {
+			  background-color: #FF9900; 
+			  color: white; 
+			  border: 2px solid #FF9900;
+			}
+
+			.button1:hover {
+			  background-color: white;
+			  color: black;
+			}
+
+</style>
+
+
+<div class="wrapper row2">
+  <div id="container" class="clear">
+
+    <div id="content">
+
+		<section id="latest" class="last">
+        <ul>
+
+        {% if sem == 0 %}
+          {% for book in set %}
+          <li>
+            <article class="clear">
+              <figure><img src="{{ book.image.url }}" alt="">
+                <figcaption>
+                  <h2>{{book.book_name}}</h2>
+                  <p>{{book.description}}</p>
+                  <footer class="more">
+                    <form action="{% url 'buying' book=book %}">
+                  <div class="group">
+                    <input class="button" type='submit' value='BuyBook' formaction="{% url 'buying' book=book.book_id %}">
+                  </div>
+                </form>
+                  </footer>
+                </figcaption>
+              </figure>
+            </article>
+          </li>
+          {% endfor %}
+        {% else%}  
+          {% for book in set %}
+            {% if book.semester == sem %}
+            <li>
+              <article class="clear">
+                <figure><img src="{{ book.image.url }}" alt="">
+                  <figcaption>
+                    <h2>{{book.book_name}}</h2>
+                    <p>{{book.description}}</p>
+                    <footer class="more">
+                      <form action="{% url 'buying' book=book %}">
+                  <div class="group">
+                    <input class="button" type='submit' value='BuyBook' formaction="{% url 'buying' book=book %}">
+                  </div>
+                </form>
+  					        </footer>
+                  </figcaption>
+                </figure>
+              </article>
+            </li>
+            {% endif %}
+          {% endfor %}
+          {% endif %}
+       </ul>
+      </section>
+    </div>
+    <!-- right column --> 
+    <aside id="right_column">
+      <h2 class="title">Subject</h2>
+      <nav>
+        <ul>
+          <li>FIRST YEAR:</li>
+          <li><a href="{% url 'home1' sem=1 %}">1st SEM</a></li>
+          <li><a href="{% url 'home1' sem=2 %}">2nd SEM</a></li>
+          <br>
+          <li>SECOND YEAR:</li>
+          <li><a href="{% url 'home1' sem=3 %}">3rd SEM</a></li>
+          <li><a href="{% url 'home1' sem=4 %}">4th SEM</a></li>
+          <br>
+          <li>THIRD YEAR:</li>
+          <li><a href="{% url 'home1' sem=5 %}">5th SEM</a></li>
+          <li><a href="{% url 'home1' sem=6 %}">6th SEM</a></li>
+          <br>
+          <li>FOURTH YEAR:</li>
+          <li><a href="{% url 'home1' sem=7 %}">7th SEM</a></li>
+          <li><a href="{% url 'home1' sem=8 %}">8th SEM</a></li>
+          <br>
+        </ul>
+      </nav>
+      <!-- /nav -->
+      {% if user == "NULL" %}
+          <h2 class="title">Please LOGIN/SIGN_UP</h2>
+          <section class="last">
+            <address>
+            Full Name:NULL<br>
+            Email:<br>
+            Address:<br>
+            phno<br>
+            userid<br>
+            <br>
+            </address>
+          </section>
+      {% elif user == "fail" %}
+          <h2 class="title">Please LOGIN/SIGN_UP</h2>
+          <section class="last">
+            <address>
+            Full Name:NULL<br>
+            Email:<br>
+            Address:<br>
+            phno:<br>
+            userid:<br>
+            <br>
+            </address>
+          </section>          
+      {% else %}
+          <h2 class="title">Logged in as:</h2>
+          <section class="last">
+            <address>
+            Full Name :{{objec.customer_name}}<br>
+            Email     :{{objec.email}}<br>
+            Address   :{{objec.Address}}<br>
+            phno      :{{objec.phno}}<br>
+            userid    :{{objec.username}}<br>
+            <br>
+            </address>
+          </section>
+
+      {% endif %}   
+
+      <!-- /section -->
+    </aside>
+    <!-- / content body -->
+  </div>
+</div>
+
+{% endblock %}
